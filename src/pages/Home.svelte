@@ -1,12 +1,9 @@
 <script>
 	import CharityList from "../components/CharityList.svelte";
-    
-	let title = "Charity";	
-	let charities = ['Charity 1', 'Charity 2', 'Charity 3']
-</script>
 
-<h1>{title}</h1>
-<CharityList />
+	let title = "Charity";	
+	let charities = ["Charity 1", "Charity 2", "Charity 3"];
+</script>
 
 <style>
 h1 {
