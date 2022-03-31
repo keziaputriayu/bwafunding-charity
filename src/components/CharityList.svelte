@@ -1,12 +1,16 @@
 <script>
-   export let charities = ['Default charity 1'];
+   export let charities;
 </script>
 
 <div>
     <h2>Daftar Charity</h2>
-    <pre>{charities}</pre>
+    {#if charities !== undefined}
     <ul>
-      <li>Charity 1</li>
-      <li>Charity 2</li>
-   </ul> 
+      {#each charities as Charity}
+        <li>{Charity}</li>
+      {/each}
+   </ul>
+{:else} 
+   <h5>Data belum tersedia</h5>
+{/if}
 </div>  
