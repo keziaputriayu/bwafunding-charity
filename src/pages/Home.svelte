@@ -1,7 +1,7 @@
 <script>
 	import CharityList from "../components/CharityList.svelte";
     import { charities } from "../data/charities.js";
-	
+
 	let title = "Charity";	
 </script>
 
@@ -15,5 +15,4 @@ h1 {
 <div>
 	<h1>{title}</h1>
     <CharityList {charities} />
-	<CharityList />
 </div>

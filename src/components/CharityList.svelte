@@ -7,7 +7,7 @@
     {#if charities !== undefined}
     <ul>
       {#each charities as Charity}
-        <li>{Charity}</li>
+        <li>{Charity.title} - {Charity.category}</li>
       {/each}
    </ul>
 {:else} 
