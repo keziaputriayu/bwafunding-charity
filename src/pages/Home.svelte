@@ -9,7 +9,6 @@
 h1 {
 	font-size: 3em;
 	color: #e2071c;
-}
 </style>
 
 <div>
