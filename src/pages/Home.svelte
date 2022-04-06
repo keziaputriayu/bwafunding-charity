@@ -1,17 +1,20 @@
 <script>
 	import CharityList from "../components/CharityList.svelte";
+	import Header from "../components/Header.svelte"
+	import Welcome from "../components/Welcome.svelte"
+	import Modal from "../components/Modal.svelte"
+	import Promo from "../components/Promo.svelte"
+	import Footer from "../components/Footer.svelte"
+
     import { charities } from "../data/charities.js";
 
 	let title = "Charity";	
 </script>
 
-<style>
-h1 {
-	font-size: 3em;
-	color: #e2071c;
-</style>
+<Header />
+<Welcome />
+<Modal />
+<CharityList {charities} />
+<Promo />
+<Footer />
 
-<div>
-	<h1>{title}</h1>
-    <CharityList {charities} />
-</div>

@@ -1,6 +1,45 @@
 <script>
+   import Modal from './Modal.svelte'
+
    export let charities;
+   let isModalOpen = false;
+
+   function calculateFunded(pledged, target) {
+      return Math.round((1 / (target / pledged)) * 100);
+   }
+
+   function formatCurrency(nominal) {
+      return nominal.toLocaleString('id-ID', {
+         style: "currency",
+         currency: "IDR",
+      });
+   }
+
+   function calculateDaysRemaining(date_end) {
+      const delta = date_end - new Date();
+   
+      const oneDay = 24 * 60 * 60 * 1000;
+      return Math.round(Math.abs(delta / oneDay));
+   }
+
+   function handleButton() {
+      isModalOpen = true;
+   }
+
+   function handleCloseModal() {
+      isModalOpen = false;
+   }
 </script>
+
+<style>
+   .xs-list-with-content {
+      font-size: 12px;
+   }
+   .show {
+      display: block;
+      background-color: rgba(0, 0, 0, 0.45);
+   }
+</style>
 
 <!-- popularCauses section -->
 <section id="popularcause" class="bg-gray waypoint-tigger xs-section-padding">
@@ -12,21 +51,36 @@
             <p>FundPress has built a platform focused on aiding entrepreneurs, startups, and <br> companies
                raise capital from anyone.</p>
          </div><!-- .xs-heading-title END -->
-      </div><!-- .row end -->
+      </div>
+      <!-- .row end -->
+      {#if charities !== undefined}
+      {#each charities as charity}
       <div class="row">
          <div class="col-lg-4 col-md-6">
+            {#if isModalOpen === true}
+            <Modal>
             <!-- modal goes here -->
             <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-               aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div 
+            class="modal fade show" 
+            id="exampleModal" 
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel">
                <div class="modal-dialog" role="document">
                   <div class="modal-content">
                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Splash Drone 3 a Fully Waterproof
-                           Drone that
-                           floats</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                           <span aria-hidden="true">&times;</span>
+                        <h5 class="modal-title" id="exampleModalLabel">
+                        {charity.title}
+                        </h5>
+                        <button 
+                        type="button" 
+                        class="close" 
+                        data-dismiss="modal" 
+                        aria-label="Close"
+                         on:click={handleCloseModal}
+                        >
+                        <span aria-hidden="true">&times;</span>
                         </button>
                      </div>
                      <div class="modal-body">
@@ -58,55 +112,87 @@
                   </div>
                </div>
             </div>
+            </Modal>
+            {/if}
             <div class="xs-popular-item xs-box-shadow">
                <div class="xs-item-header">
-
-                  <img src="assets/images/causes/causes_4.png" alt="">
-
+                  <img src="/assets/images/causes/causes_4.png" alt="" />
                   <div class="xs-skill-bar">
                      <div class="xs-skill-track">
-                        <p><span class="number-percentage-count number-percentage" data-value="90"
-                              data-animation-duration="3500">0</span>%</p>
+                        <p>
+                           <span 
+                           class="number-percentage-count number-percentage" data-value="90"
+                              data-animation-duration="3500">
+                              {calculateFunded(charity.pledged, charity.target)}
+                           </span>
+                           %
+                        </p>
                      </div>
                   </div>
-               </div><!-- .xs-item-header END -->
+               </div>
+               <!-- .xs-item-header END -->
                <div class="xs-item-content">
                   <ul class="xs-simple-tag xs-mb-20">
-                     <li><a href="">Food</a></li>
-                  </ul>
-
-                  <a href="#" class="xs-post-title xs-mb-30">Splash Drone 3 a Fully Waterproof Drone that
-                     floats</a>
+                     <li>
+                        <a href="">{charity.category}</a>
+                     </li>
+                  <a href="#" class="xs-post-title xs-mb-30">
+                     {charity.title}
+                     </a>
 
                   <ul class="xs-list-with-content">
-                     <li>$67,000<span>Pledged</span></li>
-                     <li><span class="number-percentage-count number-percentage" data-value="90"
-                           data-animation-duration="3500">0</span>% <span>Funded</span></li>
-                     <li>3<span>Days to go</span></li>
+                     <li class="pledged">
+                        {formatCurrency(charity.pledged)}
+                        <span>pledged</span>
+                     </li>
+                     <li>
+                        <span class="number-percentage-count number-percentage"
+                     data-value="90"
+                     data-animation-duration="3500">
+                     {calculateFunded(charity.pledged, charity.target)}
+                     </span>
+                     %
+                     <span>Funded</span>
+                     </li>
+                     <li>
+                     {calculateDaysRemaining(charity.date_end)}
+                     <span>Days to go</span></li>
                   </ul>
 
                   <span class="xs-separetor"></span>
 
                   <div class="row xs-margin-0">
                      <div class="xs-round-avatar">
-                        <img src="assets/images/avatar/avatar_1.jpg" alt="">
+                        <img src="{charity.profile_photo}" alt="" />
                      </div>
                      <div class="xs-avatar-title">
-                        <a href="#"><span>By</span>Ema Watson</a>
+                        <a href="#">
+                           <span>By</span>
+                           {charity.profile_name}
+                        </a>
                      </div>
                   </div>
 
-                  <span class="xs-separetor"></span>
+                  <span class="xs-separetor" />
 
-                  <a href="#" data-toggle="modal" data-target="#exampleModal"
-                     class="btn btn-primary btn-block">
-                     Donate This Cause
-                  </a>
-               </div><!-- .xs-item-content END -->
-            </div><!-- .xs-popular-item END -->
+                  <button
+                  on:click={handleButton}
+                  data-toggle="modal" 
+                  data-target="#exampleModal"
+                  class="btn btn-primary btn-block">
+                  Donate This Cause
+                  </button>
+               </div>
+               <!-- .xs-item-content END -->
+            </div>
+            <!-- .xs-popular-item END -->
          </div>
-      </div><!-- .row end -->
-   </div><!-- .container end -->
+         </div>
+         {/each}
+         {/if}
+      <!-- .row end -->
+   </div>
+   <!-- .container end -->
 </section><!-- End popularCauses section -->
 
 
@@ -121,4 +207,4 @@
 {:else} 
    <h5>Data belum tersedia</h5>
 {/if}
-</div>  
+</div>  -->
