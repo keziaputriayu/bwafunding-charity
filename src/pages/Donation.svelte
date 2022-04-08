@@ -38,7 +38,7 @@
 {#if data}
 	<section 
     class="xs-banner-inner-section parallax-window" style=
-	"background-image:url('/assets/images/backgrounds/kat-yukawa-K0E6E0a0R3A-unsplash.jpg')">
+	"background-image:url('/assets/images/e6633b3c34996d9910c6ca23f25d0ab0.jpg')">
 	<div class="xs-black-overlay"></div>
 	<div class="container">
 	<div class="color-white xs-inner-banner-content">
