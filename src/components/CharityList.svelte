@@ -1,4 +1,5 @@
 <script>
+   import { onMount, onDestroy, beforeUpdate, afterUpdate } from 'svelte';
    import Modal from './Modal.svelte'
 
    export let charities;
@@ -39,6 +40,9 @@
       display: block;
       background-color: rgba(0, 0, 0, 0.45);
    }
+   .pledged {
+      margin-right: 2em;
+   }
 </style>
 
 <!-- popularCauses section -->
@@ -52,10 +56,9 @@
                raise capital from anyone.</p>
          </div><!-- .xs-heading-title END -->
       </div>
-      <!-- .row end -->
-      {#if charities !== undefined}
-      {#each charities as charity}
+      <!-- .row end --> 
       <div class="row">
+         {#each charities as charity}
          <div class="col-lg-4 col-md-6">
             {#if isModalOpen === true}
             <Modal>
@@ -187,9 +190,8 @@
             </div>
             <!-- .xs-popular-item END -->
          </div>
-         </div>
          {/each}
-         {/if}
+      </div>
       <!-- .row end -->
    </div>
    <!-- .container end -->

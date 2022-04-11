@@ -7,19 +7,19 @@
     import NotFound from './pages/NotFound.svelte'
 	let page, params;
 
-	router('/',() => (page = Home));
-	router('/about', () => (page = About));
-	router('/contact', () => (page = Contact));
+	router('/',() => ($page = Home));
+	router('/about', () => ($page = About));
+	router('/contact', () => ($page = Contact));
 	router('/Donation/:id', 
 	(ctx, next) => {
-      params = ctx.params;
+      $params = ctx.params;
 	  next();
 	},
 	() => (page = Donation)
 	);
-    router('/*', () => (page = NotFound));
+    router('/*', () => ($page = NotFound));
 
 	router.start();
 </script>
 
-<svelte:component this={page} {params} />
+<svelte:component this={$page} {params} />

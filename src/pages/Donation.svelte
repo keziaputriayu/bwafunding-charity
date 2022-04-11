@@ -1,18 +1,20 @@
 <script>
+    import { onMount } from 'svelte';
     import Header from '../components/Header.svelte'
     import Footer from '../components/Footer.svelte'
-    import {charities} from '../data/charities'
     
     export let params;
-    let data;
+    let charity;
 
-    function getCharity(id) {
-        return charities.find(function (charity) {
-            return charity.id === parseInt(id);
-        })
+    async function getCharity(id) {
+        const res = await fetch('https://charity-api-bwa.herokuapp.com/charities/${id}');
+        return res.json();
     }
 
-    data = getCharity(params.id);
+    onMount(async function() {
+        charity = await getCharity(params.id)
+    });
+
 </script>
 
 <style>
@@ -35,18 +37,19 @@
 <Header />
 <!-- welcome section -->
 <!--breadcumb start here-->
-{#if data}
+{#if charity}
 	<section 
     class="xs-banner-inner-section parallax-window" style=
-	"background-image:url('/assets/images/e6633b3c34996d9910c6ca23f25d0ab0.jpg')">
+	"background-image:url('/assets/images/kat-yukawa-K0E6E0a0R3A-unsplash.jpg')">
 	<div class="xs-black-overlay"></div>
 	<div class="container">
 	<div class="color-white xs-inner-banner-content">
 	<h2>Donate Now</h2>
-	<p>{data.title}</p>
+	<p>{charity.title}</p>
 	<ul class="xs-breadcumb">
 	<li class="badge badge-pill badge-primary">
-	<a href="/" class="color-white">Home /</a> Donate
+	<a href="/" class="color-white">Home /</a> 
+    Donate
 	</li>
 	</ul>
 	</div>
@@ -59,15 +62,15 @@
 	<div class="row">
 	<div class="col-lg-6">
 	<div class="xs-donation-form-images">
-    <img src="{data.thumbnail}" 
+    <img src={charity.thumbnail}
     class="img-responsive" 
-    alt="Family Images"/>
+    alt="Family Images">
 </div>
 	</div>
 	<div class="col-lg-6">
 	<div class="xs-donation-form-wraper">
 	<div class="xs-heading xs-mb-30">
-	<h2 class="xs-title">{data.title}</h2>
+	<h2 class="xs-title">{charity.title}</h2>
 	<p class="small">
         To learn more about make donate charity with us visit our "
         <span class="color-green">Contact us</span>
