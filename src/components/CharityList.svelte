@@ -1,6 +1,6 @@
 <script>
    import { onMount, onDestroy, beforeUpdate, afterUpdate } from 'svelte';
-   import Modal from './Modal.svelte'
+   import Modal from './Modal.svelte';
 
    export let charities;
    let isModalOpen = false;
@@ -119,7 +119,7 @@
             {/if}
             <div class="xs-popular-item xs-box-shadow">
                <div class="xs-item-header">
-                  <img src="/assets/images/causes/causes_4.png" alt="" />
+                  <img src={charity.thumbnail} alt="" />
                   <div class="xs-skill-bar">
                      <div class="xs-skill-track">
                         <p>
@@ -137,7 +137,7 @@
                <div class="xs-item-content">
                   <ul class="xs-simple-tag xs-mb-20">
                      <li>
-                        <a href="">{charity.category}</a>
+                        <a href="#">{charity.category}</a>
                      </li>
                   <a href="#" class="xs-post-title xs-mb-30">
                      {charity.title}
