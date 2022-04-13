@@ -49,7 +49,7 @@
         align-items: center;
     }
     #xs-donate-agree {
-        width: 35px;
+        width: 35px; 
     }
     label[for='xs-donate-agree'] {
         margin: 0;
