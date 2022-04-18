@@ -1,8 +1,8 @@
 <script>
-   import { onMount, onDestroy, beforeUpdate, afterUpdate } from 'svelte';
+   import { charities } from '../stores/data.js';
    import Modal from './Modal.svelte';
+   import Loader from './Loader.svelte';
 
-   export let charities;
    let isModalOpen = false;
 
    function calculateFunded(pledged, target) {
@@ -10,8 +10,8 @@
    }
 
    function formatCurrency(nominal) {
-      return nominal.toLocaleString('id-ID', {
-         style: "currency",
+      return nominal.toLocaleString("id-ID", {
+         style:"currency",
          currency: "IDR",
       });
    }
@@ -42,7 +42,7 @@
    }
    .pledged {
       margin-right: 2em;
-   }
+   } 
 </style>
 
 <!-- popularCauses section -->
@@ -58,7 +58,7 @@
       </div>
       <!-- .row end --> 
       <div class="row">
-         {#each charities as charity}
+         {#each $charities as charity}
          <div class="col-lg-4 col-md-6">
             {#if isModalOpen === true}
             <Modal>
@@ -120,7 +120,7 @@
             <div class="xs-popular-item xs-box-shadow">
                <div class="xs-item-header">
                   <img src={charity.thumbnail} alt="" />
-                  <div class="xs-skill-bar">
+                  <div class="xs-skill-bar"> 
                      <div class="xs-skill-track">
                         <p>
                            <span 
@@ -190,12 +190,15 @@
             </div>
             <!-- .xs-popular-item END -->
          </div>
+         {:else}
+        <Loader /> 
          {/each}
       </div>
       <!-- .row end -->
    </div>
    <!-- .container end -->
-</section><!-- End popularCauses section -->
+</section>
+<!-- End popularCauses section -->
 
 
 <!--<div>

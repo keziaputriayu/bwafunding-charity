@@ -1,7 +1,14 @@
+[build]
+functions = "./functions"
+
+[dev]
+publish = "public/"
+functions = "functions/"
+targetPort = 8080
+functionsPort = 52041
+
 [[redirects]]
 from = "/*"
 to = "/index.html"
 status = 200
 
-[build]
-functions = "./functions"
