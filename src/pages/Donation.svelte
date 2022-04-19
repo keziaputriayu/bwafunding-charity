@@ -7,10 +7,15 @@
     import Loader from '../components/Loader.svelte';
     
     
-    let amount, 
+    let amount = 0, 
     name, 
     email, 
-    agree = false;
+    agree = false,
+    contribute = 0;
+
+   $: if(charity) {
+       contribute = Math.floor((parseInt(amount) / $charity.target) * 100);
+   } 
 
    getCharity($params.id);
 
@@ -19,6 +24,7 @@
     }
 
     async function handleForm(event) {
+        agree = false;
         const newDate = await getCharity($params.id);
         charity.pledged = charity.pledged + parseInt(amount);
         try { 
@@ -52,6 +58,9 @@
     label[for='xs-donate-agree'] {
         margin: 0;
         margin-left: 10px;
+    }
+    Label[for='xs-donate-email'] {
+        margin-top: 35px;
     }
     .xs-donation-form-images {
         text-align: center;
@@ -104,6 +113,11 @@
         <span class="color-green">+44(0) 800 883 8450</span>
         .
     </p>
+    <h5>
+        Your donation will be contributing 
+        <strong>{contribute}%</strong> 
+        of total current donation.
+    </h5>
     <span class="xs-separetor v2"></span>
 	</div>
     <!-- .xs-heading end -->
@@ -165,7 +179,7 @@
         name="agree" 
         id="xs-donate-agree" 
         bind:checked={agree} />
-        <label for="xz-donate-agree">
+        <label for="xs-donate-agree">
             I Agree
             <span class="clor-light-red">**</span>
             </label>
